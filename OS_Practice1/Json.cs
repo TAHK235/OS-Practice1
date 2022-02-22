@@ -3,7 +3,7 @@ using System.IO;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Task3
+namespace OS_Practice1
 {
     internal sealed class Person
     {
@@ -13,9 +13,9 @@ namespace Task3
         public int Age { get; set; }
     }
 
-    internal static class Program
+    internal static class Json
     {
-        private static void Main()
+        internal static void Create()
         {
             string path = @"C:\temp.json";
             FileInfo file = new FileInfo(path);

@@ -3,11 +3,11 @@ using System.IO;
 using System.IO.Compression;
 using System.Text;
 
-namespace Task5
+namespace OS_Practice1
 {
-    internal static class Program
+    internal static class Archive
     {
-        private static void Main()
+        internal static void Create()
         {
             string sourceFolder = @"C:\Archive";
             string zipFile = @"C:\Archive.zip";
@@ -25,8 +25,8 @@ namespace Task5
                 {
                     string fileName = Path.GetFileName(source);
                     StreamReader sr = new StreamReader(source, Encoding.Default);
-                    ZipArchiveEntry readmeEntry = archive.CreateEntry(fileName);
-                    using (StreamWriter writer = new StreamWriter(readmeEntry.Open()))
+                    ZipArchiveEntry file = archive.CreateEntry(fileName);
+                    using (StreamWriter writer = new StreamWriter(file.Open()))
                     {
                         writer.Write(sr.ReadToEnd());
                     }

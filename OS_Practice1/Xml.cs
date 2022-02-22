@@ -2,11 +2,11 @@
 using System.IO;
 using System.Xml.Linq;
 
-namespace Task4
+namespace OS_Practice1
 {
-    internal static class Program
+    internal static class Xml
     {
-        static void Main()
+        internal static void Create()
         {
             string path = @"C:\temp.xml";
             FileInfo file = new FileInfo(path);

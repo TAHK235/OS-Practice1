@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace Task2
+namespace OS_Practice1
 {
-    internal static class Program
+    internal static class Files
     {
-        private static void Main()
+        internal static void Write()
         {
             string path = @"C:\temp.txt";
             FileInfo file = new FileInfo(path);

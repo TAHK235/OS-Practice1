@@ -1,11 +1,11 @@
 ﻿using System;
 using System.IO;
 
-namespace Task1
+namespace OS_Practice1
 {
-    internal static class Program
+    internal static class Drives
     {
-        private static void Main()
+        internal static void ShowDrive()
         {
             DriveInfo[] drives = DriveInfo.GetDrives();
 
@@ -22,8 +22,6 @@ namespace Task1
 
                 Console.WriteLine();
             }
-
-            Console.ReadKey();
         }
     }
 }
