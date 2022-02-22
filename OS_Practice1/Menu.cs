@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 
 namespace OS_Practice1
 {
@@ -6,19 +7,38 @@ namespace OS_Practice1
     {
         private static void PrintOptions()
         {
+            Console.Clear();
             Console.WriteLine("Выберете пункт:");
-            Console.WriteLine("1.Информация о дисках");
-            Console.WriteLine("2.Файлы");
-            Console.WriteLine("3.JSON");
-            Console.WriteLine("4.XML");
-            Console.WriteLine("5.ZIP архив");
-            Console.WriteLine("6.Выход");
+            Console.WriteLine("1. Информация о дисках");
+            Console.WriteLine("2. Файлы");
+            Console.WriteLine("3. JSON");
+            Console.WriteLine("4. XML");
+            Console.WriteLine("5. ZIP архив");
+            Console.WriteLine("6. Выход");
+        }
+
+        private static void PrintFileOptions()
+        {
+            Console.Clear();
+            Console.WriteLine("Выберете как Вы хотите сохранить файл");
+            Console.WriteLine("1. По опредёленному пути");
+            Console.WriteLine("2. В папке по умолчанию ");
+            Console.WriteLine("3. Вернуться");
+        }
+
+        internal static void Delete(FileInfo file)
+        {
+            Console.WriteLine("Нажмите любую клавишу, чтобы удалить файл и продолжить...");
+            Console.ReadKey();
+            file.Delete();
+            Console.WriteLine("Файл удален");
         }
 
         internal static void Show()
         {
             while (true)
             {
+                Console.Clear();
                 PrintOptions();
                 string choice = Console.ReadLine();
 
@@ -45,13 +65,41 @@ namespace OS_Practice1
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Неизвестное значение");
+                        Console.Clear();
+                        Console.WriteLine("Неверное значение");
                         break;
                 }
 
-                Console.WriteLine("Нажмите любую клавишу для продолжения...");
+                Console.WriteLine("Нажмите любую клавишу для повторного выбора");
                 Console.ReadKey();
-                Console.Clear();
+            }
+        }
+
+        internal static bool Ask()
+        {
+            while (true)
+            {
+                PrintFileOptions();
+                string choice = Console.ReadLine();
+
+                Console.WriteLine(choice);
+                switch (choice)
+                {
+                    case "1":
+                        return true;
+                    case "2":
+                        return false;
+                    case "3":
+                        Show();
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверное значение. Введите 1, 2 или 3");
+                        break;
+                }
+
+                Console.WriteLine("Нажмите любую клавишу для повторного выбора");
+                Console.ReadKey();
             }
         }
     }
