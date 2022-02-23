@@ -8,20 +8,20 @@ namespace OS_Practice1
     {
         internal static void Create()
         {
-            string path = @"C:\temp.xml";
-            FileInfo file = new FileInfo(path);
-
-            Console.WriteLine("Введите имя:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Введите возраст:");
-            int age = Convert.ToInt32(Console.ReadLine());
+            bool flag = Menu.Ask();
+            string message = flag ? @"Введите полный путь файла, например c:\temp\temp.xml" : "Введите название файла";
+            string path = Pather.Enter(message, flag);
+            bool directoryNotExists = Pather.DirectoryExist(path);
+            path = Pather.Converter(path, ".xml");
+            Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
+            
             Console.WriteLine("Введите компанию:");
             string company = Console.ReadLine();
 
             XDocument xdoc = new XDocument();
             XElement user1 = new XElement("user1");
-            XAttribute userAttribute = new XAttribute("name", name);
-            XElement ageElement = new XElement("age", $"{age}");
+            XAttribute userAttribute = new XAttribute("name", Menu.Name());
+            XElement ageElement = new XElement("age", $"{Menu.Age()}");
             XElement compElement = new XElement("company", company);
             user1.Add(userAttribute);
             user1.Add(ageElement);
@@ -37,8 +37,8 @@ namespace OS_Practice1
                 Console.WriteLine(sr.ReadToEnd());
             }
 
-            file.Delete();
-            Console.WriteLine("Файл удален");
+            Menu.Delete(path);
+            Pather.Delete(directoryNotExists, path);
         }
     }
 }

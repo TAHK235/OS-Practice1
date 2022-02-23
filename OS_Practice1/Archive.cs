@@ -9,11 +9,21 @@ namespace OS_Practice1
     {
         internal static void Create()
         {
+            bool flag = Menu.PathAsk();
             string sourceFolder = @"C:\Archive";
+            string message = flag ? @"Введите путь каталога для архивации , например c:\temp\temp.zip" : "Введите название архива";
+            if (flag)
+            {
+                sourceFolder = Pather.Enter(message, true);
+            }
+
+            bool flag2 = Menu.Ask();
+            
             string zipFile = @"C:\Archive.zip";
-            DirectoryInfo di = Directory.CreateDirectory(sourceFolder);
+            string path = Pather.Enter(message, flag);
+            bool directoryNotExists = Pather.DirectoryExist(path);
+            path = Pather.Converter(path, ".zip");
             ZipFile.CreateFromDirectory(sourceFolder, zipFile);
-            di.Delete();
 
             Console.WriteLine($"Папка {sourceFolder} архивирована в файл {zipFile}");
             Console.WriteLine("Введите путь файла для сжатия без кавычек:");

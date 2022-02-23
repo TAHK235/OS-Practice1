@@ -17,14 +17,14 @@ namespace OS_Practice1
     {
         internal static void Create()
         {
-            string path = @"C:\temp.json";
-            FileInfo file = new FileInfo(path);
-
-            Console.WriteLine("Введите имя:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Введите возраст:");
-            int age = Convert.ToInt32(Console.ReadLine());
-            Person person = new Person() { Name = name, Age = age };
+            bool flag = Menu.Ask();
+            string message = flag ? @"Введите полный путь файла, например c:\temp\temp.json" : "Введите название файла";
+            string path = Pather.Enter(message, flag);
+            bool directoryNotExists = Pather.DirectoryExist(path);
+            path = Pather.Converter(path, ".json");
+            Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
+            
+            Person person = new Person() { Name = Menu.Name(), Age = Menu.Age() };
             string json = JsonSerializer.Serialize(person);
 
             using (StreamWriter sw = new StreamWriter(path, false))
@@ -38,8 +38,8 @@ namespace OS_Practice1
                 Console.WriteLine(sr.ReadToEnd());
             }
 
-            file.Delete();
-            Console.WriteLine("Файл удален");
+            Menu.Delete(path);
+            Pather.Delete(directoryNotExists, path);
         }
     }
 }

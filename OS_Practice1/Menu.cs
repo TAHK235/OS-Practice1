@@ -26,11 +26,28 @@ namespace OS_Practice1
             Console.WriteLine("3. Вернуться");
         }
 
+        private static void PrintPathOption()
+        {
+            Console.Clear();
+            Console.WriteLine("Хотите заархивировать определенную папку с файлами или создать новый архив?");
+            Console.WriteLine("1. Да");
+            Console.WriteLine("2. Нет");
+            Console.WriteLine("3. Вернуться");
+        }
+
         internal static void Delete(FileInfo file)
         {
             Console.WriteLine("Нажмите любую клавишу, чтобы удалить файл и продолжить...");
             Console.ReadKey();
             file.Delete();
+            Console.WriteLine("Файл удален");
+        }
+
+        internal static void Delete(string path)
+        {
+            Console.WriteLine("Нажмите любую клавишу, чтобы удалить файл и продолжить...");
+            Console.ReadKey();
+            File.Delete(path);
             Console.WriteLine("Файл удален");
         }
 
@@ -86,8 +103,10 @@ namespace OS_Practice1
                 switch (choice)
                 {
                     case "1":
+                        Console.Clear();
                         return true;
                     case "2":
+                        Console.Clear();
                         return false;
                     case "3":
                         Show();
@@ -101,6 +120,62 @@ namespace OS_Practice1
                 Console.WriteLine("Нажмите любую клавишу для повторного выбора");
                 Console.ReadKey();
             }
+        }
+
+        internal static bool PathAsk()
+        {
+            while (true)
+            {
+                PrintPathOption();
+                string choice = Console.ReadLine();
+
+                Console.WriteLine(choice);
+                switch (choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        return true;
+                    case "2":
+                        Console.Clear();
+                        return false;
+                    case "3":
+                        Show();
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверное значение. Введите 1, 2 или 3");
+                        break;
+                }
+
+                Console.WriteLine("Нажмите любую клавишу для повторного выбора");
+                Console.ReadKey();
+            }
+        }
+
+        internal static int Age()
+        {
+            while (true)
+            {
+                Console.WriteLine("Введите возраст:");
+                string input = Console.ReadLine();
+                if (int.TryParse(input, out int result))
+                {
+                    return Convert.ToInt32(input);
+                }
+            }
+        }
+
+        internal static string Name()
+        {
+            Console.WriteLine("Введите имя:");
+            string name = Console.ReadLine();
+            while (string.IsNullOrEmpty(name) || name.Trim() == string.Empty)
+            {
+                Console.WriteLine("Введите имя:");
+                name = Console.ReadLine();
+            }
+
+            return name;
         }
     }
 }
