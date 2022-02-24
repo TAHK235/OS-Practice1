@@ -15,7 +15,7 @@ namespace OS_Practice1
             Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
             Console.WriteLine("Введите строку для записи в файл:");
             string text = Console.ReadLine();
-            bool directoryNotExists = Pather.DirectoryExist(path);
+            bool directoryNotExists = Pather.DirectoryNotExist(path);
 
             using (StreamWriter sw = new StreamWriter(path, false))
             {

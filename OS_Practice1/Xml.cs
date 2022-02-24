@@ -11,7 +11,7 @@ namespace OS_Practice1
             bool flag = Menu.Ask();
             string message = flag ? @"Введите полный путь файла, например c:\temp\temp.xml" : "Введите название файла";
             string path = Pather.Enter(message, flag);
-            bool directoryNotExists = Pather.DirectoryExist(path);
+            bool directoryNotExists = Pather.DirectoryNotExist(path);
             path = Pather.Converter(path, ".xml");
             Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
             

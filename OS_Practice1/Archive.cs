@@ -9,49 +9,70 @@ namespace OS_Practice1
     {
         internal static void Create()
         {
-            bool flag = Menu.PathAsk();
-            string sourceFolder = @"C:\Archive";
-            string message = flag ? @"Введите путь каталога для архивации , например c:\temp\temp.zip" : "Введите название архива";
-            if (flag)
+            const string sourceFolder = @"C:\Archive";
+            const string message = "Введите название архива";
+            string archiveName = Pather.Enter(message, false);
+            archiveName = Pather.Converter(archiveName, ".zip");
+            DirectoryInfo di = Directory.CreateDirectory(sourceFolder);
+            try
             {
-                sourceFolder = Pather.Enter(message, true);
+                ZipFile.CreateFromDirectory(sourceFolder, archiveName);
+            }
+            catch
+            {
+                archiveName = "tttempp" + archiveName;
+                Console.WriteLine($"Упс, такой архив уже был создан, поэтому архив называется {Path.GetFileName(archiveName)}");
+                ZipFile.CreateFromDirectory(sourceFolder, archiveName);
             }
 
-            bool flag2 = Menu.Ask();
-            
-            string zipFile = @"C:\Archive.zip";
-            string path = Pather.Enter(message, flag);
-            bool directoryNotExists = Pather.DirectoryExist(path);
-            path = Pather.Converter(path, ".zip");
-            ZipFile.CreateFromDirectory(sourceFolder, zipFile);
+            di.Delete();
+            Console.WriteLine($"Архив {Path.GetFileName(archiveName)} создан {Path.GetFullPath(archiveName)}");
+            const string message2 = "Введите путь файла для сжатия";
+            string source = Pather.Enter(message2, true);
 
-            Console.WriteLine($"Папка {sourceFolder} архивирована в файл {zipFile}");
-            Console.WriteLine("Введите путь файла для сжатия без кавычек:");
-            string source = Console.ReadLine();
-
-            using (FileStream zipToOpen = new FileStream(zipFile, FileMode.Open))
+            using (FileStream zipToOpen = new FileStream(archiveName, FileMode.Open))
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
                 {
-                    string fileName = Path.GetFileName(source);
-                    StreamReader sr = new StreamReader(source, Encoding.Default);
-                    ZipArchiveEntry file = archive.CreateEntry(fileName);
-                    using (StreamWriter writer = new StreamWriter(file.Open()))
+                    string fileName;
+                    ZipArchiveEntry file;
+                    if (File.Exists(source))
                     {
-                        writer.Write(sr.ReadToEnd());
+                        fileName = Path.GetFileName(source);
+                        StreamReader sr = new StreamReader(source, Encoding.Default);
+                        file = archive.CreateEntry(fileName);
+                        using (StreamWriter writer = new StreamWriter(file.Open()))
+                        {
+                            writer.Write(sr.ReadToEnd());
+                        }
+                        sr.Close();
                     }
+                    else
+                    {
+                        archive.CreateEntry(source);
+                        Console.WriteLine("Выбранный файл не существует, поэтому в архив был добавлен пустой файл с таким же названием");
+                    }
+                    
 
-                    sr.Close();
+                    Console.WriteLine($"Файл {Path.GetFullPath(source)} добавлен в архив {archiveName}");
                 }
             }
+            
+            const string targetFolder = @"C:\Unzip\";
+            Directory.CreateDirectory(targetFolder);
+            try
+            {
+                ZipFile.ExtractToDirectory(archiveName, targetFolder);
+                Console.WriteLine($"Содержимое архива {Path.GetFileName(archiveName)} распакован в папку {targetFolder}");
+            }
+            catch
+            {
+                Console.WriteLine($"Упс, {Path.GetFileName(archiveName)} уже был распакован в папку {targetFolder}");
+            }
 
-            string targetFolder = @"C:\Unzip";
-            DirectoryInfo folder = Directory.CreateDirectory(targetFolder);
-            ZipFile.ExtractToDirectory(zipFile, targetFolder);
-            Console.WriteLine($"Файл {zipFile} распакован в папку {targetFolder}");
-
-            folder.Delete(true);
-            File.Delete(zipFile);
+            Menu.Delete(targetFolder + Path.GetFileName(source));
+            Menu.Delete(archiveName);
+            Directory.Delete(targetFolder);
             Console.ReadLine();
         }
     }

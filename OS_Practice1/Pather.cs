@@ -100,16 +100,12 @@ namespace OS_Practice1
             return path;
         }
 
-        internal static bool DirectoryExist(string path)
+        internal static bool DirectoryNotExist(string path)
         {
-            if (!Directory.Exists(Convert.ToString(Directory.GetParent(path)))) 
-            {
-                Console.WriteLine("Такого пути не было, но теперь есть!");
-                Directory.CreateDirectory(Convert.ToString(Directory.GetParent(path)));
-                return true;
-            }
-
-            return false;
+            if (Directory.Exists(Convert.ToString(Directory.GetParent(path)))) return false;
+            Console.WriteLine("Такого пути не было, но теперь есть!");
+            Directory.CreateDirectory(Convert.ToString(Directory.GetParent(path)));
+            return true;
         }
 
         /// <summary>

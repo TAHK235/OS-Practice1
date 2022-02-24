@@ -26,12 +26,21 @@ namespace OS_Practice1
             Console.WriteLine("3. Вернуться");
         }
 
+        private static void PrintFileOptions(string file)
+        {
+            Console.Clear();
+            Console.WriteLine($"Выберете как Вы хотите сохранить {file}");
+            Console.WriteLine("1. По опредёленному пути");
+            Console.WriteLine("2. В папке по умолчанию ");
+            Console.WriteLine("3. Вернуться");
+        }
+
         private static void PrintPathOption()
         {
             Console.Clear();
             Console.WriteLine("Хотите заархивировать определенную папку с файлами или создать новый архив?");
-            Console.WriteLine("1. Да");
-            Console.WriteLine("2. Нет");
+            Console.WriteLine("1. Заархивировать определенную папку");
+            Console.WriteLine("2. Создать новый архив");
             Console.WriteLine("3. Вернуться");
         }
 
@@ -97,6 +106,36 @@ namespace OS_Practice1
             while (true)
             {
                 PrintFileOptions();
+                string choice = Console.ReadLine();
+
+                Console.WriteLine(choice);
+                switch (choice)
+                {
+                    case "1":
+                        Console.Clear();
+                        return true;
+                    case "2":
+                        Console.Clear();
+                        return false;
+                    case "3":
+                        Show();
+                        break;
+                    default:
+                        Console.Clear();
+                        Console.WriteLine("Неверное значение. Введите 1, 2 или 3");
+                        break;
+                }
+
+                Console.WriteLine("Нажмите любую клавишу для повторного выбора");
+                Console.ReadKey();
+            }
+        }
+
+        internal static bool Ask(string name)
+        {
+            while (true)
+            {
+                PrintFileOptions(name);
                 string choice = Console.ReadLine();
 
                 Console.WriteLine(choice);
