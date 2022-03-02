@@ -28,7 +28,7 @@ namespace OS_Practice1
                 Console.WriteLine($"{message}");
                 input = Console.ReadLine();
             }
-            
+
             return EnterCheck(input.Replace(" ", ""), flag);
         }
 

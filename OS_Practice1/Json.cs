@@ -23,8 +23,8 @@ namespace OS_Practice1
             bool directoryNotExists = Pather.DirectoryNotExist(path);
             path = Pather.Converter(path, ".json");
             Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
-            
-            Person person = new Person() { Name = Menu.Name(), Age = Menu.Age() };
+
+            Person person = new Person() {Name = Menu.Name(), Age = Menu.Age()};
             string json = JsonSerializer.Serialize(person);
 
             using (StreamWriter sw = new StreamWriter(path, false))

@@ -11,7 +11,7 @@ namespace OS_Practice1
             string message = flag ? @"Введите полный путь файла, например c:\temp\temp.txt" : "Введите название файла";
             string path = Pather.Enter(message, flag);
             FileInfo file = new FileInfo(path);
-            
+
             Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
             Console.WriteLine("Введите строку для записи в файл:");
             string text = Console.ReadLine();

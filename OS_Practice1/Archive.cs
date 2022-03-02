@@ -34,17 +34,16 @@ namespace OS_Practice1
             {
                 using (ZipArchive archive = new ZipArchive(zipToOpen, ZipArchiveMode.Update))
                 {
-                    string fileName;
-                    ZipArchiveEntry file;
                     if (File.Exists(source))
                     {
-                        fileName = Path.GetFileName(source);
+                        string fileName = Path.GetFileName(source);
                         StreamReader sr = new StreamReader(source, Encoding.Default);
-                        file = archive.CreateEntry(fileName);
+                        ZipArchiveEntry file = archive.CreateEntry(fileName);
                         using (StreamWriter writer = new StreamWriter(file.Open()))
                         {
                             writer.Write(sr.ReadToEnd());
                         }
+
                         sr.Close();
                     }
                     else
@@ -52,12 +51,12 @@ namespace OS_Practice1
                         archive.CreateEntry(source);
                         Console.WriteLine("Выбранный файл не существует, поэтому в архив был добавлен пустой файл с таким же названием");
                     }
-                    
+
 
                     Console.WriteLine($"Файл {Path.GetFullPath(source)} добавлен в архив {archiveName}");
                 }
             }
-            
+
             const string targetFolder = @"C:\Unzip\";
             Directory.CreateDirectory(targetFolder);
             try

@@ -14,7 +14,7 @@ namespace OS_Practice1
             bool directoryNotExists = Pather.DirectoryNotExist(path);
             path = Pather.Converter(path, ".xml");
             Console.WriteLine($"Место расположения файла {Path.GetFullPath(path)}");
-            
+
             Console.WriteLine("Введите компанию:");
             string company = Console.ReadLine();
 
